@@ -1,4 +1,5 @@
 import {CsvHandler} from './CsvHandler';
+import {DateFormatter} from './DateFormatter';
 const path = require('path');
 const axios = require('axios');
 
@@ -94,7 +95,17 @@ export class PortfolioManager {
     date: string
   ): Promise<void> {
     const csvParser = await this.csvHandler.readCsvFile(this.filePath);
-    console.log('both token and date');
+    for await (const data of csvParser) {
+      const {token, amount, timestamp}: Transaction = data;
+      if (
+        token === providedToken &&
+        DateFormatter.dateMatched(date, timestamp) &&
+        !this.transactions[token]
+      ) {
+        this.transactions[token] = {token, amount, timestamp};
+      }
+    }
+    await this.retrievePortfolioValues();
   }
 
   async createLatestPortfolioForToken(providedToken: string): Promise<void> {
