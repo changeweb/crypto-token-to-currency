@@ -25,6 +25,8 @@ Run following commands:
 
 - `npm i`
 - `npm run compile`
+- Due to large CSV file size, the file is not included.
+- Add the `transactions.csv` in `data` folder.
 
 ## CLI usage instructions
 
