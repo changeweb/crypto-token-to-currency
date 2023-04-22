@@ -103,3 +103,31 @@ Response:
   { balance: '0.693272 XRP', portfolioValue: '0.3132202896 USD' }
 ]
 ```
+
+## Design decisions
+
+Since the task is specified to be a CLI, an npm package is used to achieve this and `commander` package is chosen for its features.
+
+Since data is in csv file format, an npm package is used to read the csv file and `csv-parser` package is chosen for its features.
+
+Since the token needs to be converted in "USD" by making API call to a token to other currency converter service,
+an npm package named `axios` is used for its features.
+
+### Project architecture
+
+The project uses following classes to achieve the actions mentioned above:
+
+- A `PortfolioManager` that manages portfolios for tokens and dates.
+- A `CsvHandler` that manages csv file reading as stream.
+- A `DateFormatter` that formats date in specified format.
+
+### Performance
+
+Since the data size is large and making third party API call is needed, following design choices are made:
+
+- "Asynchronous" nature of code is used.
+- "Readable Stream" is used.
+
+### Dev environment
+
+`Typescript` and an npm package `gsc` are used for type safety, linting and best practices.
