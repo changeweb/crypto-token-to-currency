@@ -125,6 +125,15 @@ export class PortfolioManager {
 
   async createPortfoliosPerTokenForDate(date: string): Promise<void> {
     const csvParser = await this.csvHandler.readCsvFile(this.filePath);
-    console.log('date only');
+    for await (const data of csvParser) {
+      const {token, amount, timestamp}: Transaction = data;
+      if (
+        DateFormatter.dateMatched(date, timestamp) &&
+        !this.transactions[token]
+      ) {
+        this.transactions[token] = {token, amount, timestamp};
+      }
+    }
+    await this.retrievePortfolioValues();
   }
 }
