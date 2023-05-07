@@ -1,4 +1,4 @@
-# propine-task
+# Crypto Token to Currency Converter
 
 ## Introduction
 
